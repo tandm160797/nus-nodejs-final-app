@@ -11,7 +11,7 @@ let photoSchema = new Schema({
     type: ObjectId,
     ref: 'User'
   },
-  like: Number,
+  likeCount: Number,
   createddAt: Date,
   updatedAt: Date,
   deletedAt: Date

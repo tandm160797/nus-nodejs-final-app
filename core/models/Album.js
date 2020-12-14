@@ -12,9 +12,9 @@ let albumSchema = new Schema({
   mode: String,
   user: {
     type: ObjectId,
-    ref: 'USer'
+    ref: 'User'
   },
-  like: Number,
+  likeCount: Number,
   createdAt: Date,
   updatedAt: Date,
   deletedAt: Date
