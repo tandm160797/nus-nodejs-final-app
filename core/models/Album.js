@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;
 let albumSchema = new Schema({
-  photos: [{
+  photosUrl: [{
     type: ObjectId,
     ref: 'Photo'
   }],

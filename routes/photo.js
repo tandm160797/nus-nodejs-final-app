@@ -5,7 +5,7 @@ let router = express.Router();
 
 router.get('/:user-id/', photoController.getPhotosByAuthor);
 router.get('/public/:user-id/', photoController.getPhotosPublicByAuthor);
-router.get('/like/:photo-id/', photoController.getLikesById);
+router.get('/:photo-id/likes', photoController.getLikesById);
 router.get('/count/:user-id/', photoController.getCountByAuthor);
 router.get('/new/', photoController.new);
 router.post('/', photoController.create);

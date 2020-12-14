@@ -12,5 +12,7 @@ router.get('/:id/profile/follower/', userController.followerProfile);
 router.get('/:user-id/', userController.getUserById);
 router.get('/:id/edit/', userController.edit);
 router.put('/:id/', userController.update);
+router.post('/:id/follow/:user-id/', userController.follow);
+router.post('/:id/unfollow/:user-id/', userController.unfollow);
 
 export default router;

@@ -10,6 +10,8 @@ class UserController {
   async getUserById(req, res, next) {}
   async edit(req, res, next) {}
   async update(req, res, next) {}
+  async follow(req, res, next) {}
+  async unfollow(req, res, next) {}
 }
 
 export default new UserController;
