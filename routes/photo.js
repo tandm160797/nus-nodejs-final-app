@@ -4,9 +4,7 @@ import photoController from '../core/controllers/PhotoController.js';
 let router = express.Router();
 
 router.get('/:user-id/', photoController.getPhotosByAuthor);
-router.get('/public/:user-id/', photoController.getPhotosPublicByAuthor);
-router.get('/like/:photo-id/', photoController.getLikesById);
-router.get('/count/:user-id/', photoController.getCountByAuthor);
+router.get('/:photo-id/like-count/', photoController.getLikeCountById);
 router.get('/new/', photoController.new);
 router.post('/', photoController.create);
 router.get('/:id/edit/', photoController.edit);

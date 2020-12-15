@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;
 let albumSchema = new Schema({
-  photos: [{
+  photosUrl: [{
     type: ObjectId,
     ref: 'Photo'
   }],
@@ -12,9 +12,9 @@ let albumSchema = new Schema({
   mode: String,
   user: {
     type: ObjectId,
-    ref: 'USer'
+    ref: 'User'
   },
-  like: Number,
+  likeCount: Number,
   createdAt: Date,
   updatedAt: Date,
   deletedAt: Date
