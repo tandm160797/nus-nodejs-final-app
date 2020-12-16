@@ -1,10 +1,13 @@
 import express from 'express';
-import userController from '../core/controllers/UserController.js';
+
+import userController from './../core/controllers/UserController.js';
+import userValidator from './../middlewares/UserValidator.js';
+import authentication from './../middlewares/auth.js';
 
 let router = express.Router();
 
-router.post('/signin/', userController.signin);
-router.post('/signup/', userController.signup);
+router.post('/signup/', userValidator.signup, userController.signup);
+router.post('/signin/', userValidator.signin, userController.signin);
 router.post('/forgot-password/', userController.forgotPassword);
 router.post('/reset-password/:id/', userController.resetPassword);
 router.patch('/:id/follow/:user-id/', userController.follow);
@@ -15,5 +18,6 @@ router.get('/:id/followers/', userController.followers);
 router.get('/:id/', userController.show);
 router.get('/:id/edit/', userController.edit);
 router.put('/:id/', userController.update);
+router.get('/', userController.get);
 
 export default router;

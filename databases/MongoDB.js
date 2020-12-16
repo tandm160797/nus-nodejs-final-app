@@ -3,12 +3,16 @@ import mongoose from 'mongoose';
 class MongoDB {
   async connect() {
     try {
-      let host = process.env.DB_HOST || '127.0.0.1';
-      let port = process.env.DB_PORT || 27017;
-      let name = process.env.DB_NAME || 'admin';
+      let host = process.env.DB_HOST;
+      let port = process.env.DB_PORT;
+      let name = process.env.DB_NAME;
       let connectString = `mongodb://${host}:${port}/${name}`;
+      let mongodbOptions= {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      };
   
-      await mongoose.connect(connectString, { useNewUrlParser: true });
+      await mongoose.connect(connectString, mongodbOptions);
       console.log('Connect to MongoDB successfully!');
     } catch (error) {
       console.log('Connect to MongoDB failure!!!');
