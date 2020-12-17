@@ -6,8 +6,10 @@ import authentication from './../middlewares/auth.js';
 
 let router = express.Router();
 
-router.post('/signup/', userValidator.signup, userController.signup);
-router.post('/signin/', userValidator.signin, userController.signin);
+router.get('/signup/', userController.signup);
+router.get('/signin/', userController.signin);
+router.post('/signup-handler/', userValidator.signup, userController.signupHandler);
+router.post('/signin-handler/', userValidator.signin, userController.signinHanler);
 router.post('/forgot-password/', userController.forgotPassword);
 router.post('/reset-password/:id/', userController.resetPassword);
 router.patch('/:id/follow/:user-id/', userController.follow);

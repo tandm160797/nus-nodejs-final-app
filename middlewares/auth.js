@@ -15,7 +15,7 @@ export default function authentication(req, res, next) {
       if (!user) {
         res.status(401).json({
           status: 'failure',
-          message: info,
+          message: 'Token không hợp lệ',
           data: null
         });
       }
