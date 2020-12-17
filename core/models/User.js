@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 import mongoose from 'mongoose';
 
 let Schema = mongoose.Schema;
@@ -26,5 +28,13 @@ let userSchema = new Schema({
 userSchema.methods.fullName = function() {
   return `${this.firstName} ${this.lastName}`;
 }
+
+userSchema.methods.verifyPassword = function(password) {
+  return bcrypt.compare(password, this.password);
+}
+
+userSchema.pre('save', function() {
+  this.password = bcrypt.hash(this.password, 10);
+});
 
 export default mongoose.model('User', userSchema);
