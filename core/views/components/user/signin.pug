@@ -1,0 +1,47 @@
+extends ./../../layouts/layout-01.pug
+block head-script
+  link(rel='stylesheet' href='http://127.0.0.1:1024/stylesheets/signin.css')
+block body-content
+  .app
+    .header.row.no-gutters.d-flex.align-items-center
+      .header__homepage.col-md-2
+        a.header__homepage-link(href='#') Photobook
+      .header__search.col-md-4
+      .col-md-4
+      .header__user-action.col-md-2
+        a.header__user-action-register(href='http://127.0.0.1:1024/user/signup') Signup
+    .row.no-gutters.d-flex.justify-content-center
+      form#signin-form.signin-form.col-md-3(method='post' action='http://127.0.0.1:1024/user/signin-handler')
+        .signin-form-header
+          .header-title Photobook Signin
+          .header-icon
+            .header-icon-link.d-flex.justify-content-around
+              a(href='https://google.com.vn')
+                img.rounded-circle(src='http://127.0.0.1:1024/images/google.png' alt='Google' width='65px' height='65px')
+              a(href='https://facebook.com')
+                img.rounded-circle(src='http://127.0.0.1:1024/images/facebook.png' alt='Facebook' width='65px' height='65px')
+              a(href='https://twitter.com/.com')
+                img.rounded-circle(src='http://127.0.0.1:1024/images/twitter.png' alt='Twitter' width='65px' height='65px')
+        .signin-form-body
+          .row.justify-content-center
+            .col-auto.default-atv
+              img.rounded-circle(src='http://127.0.0.1:1024/images/default-avatar.png' alt='default-avt' width='140px' height='140px')
+          if jsonRes
+            .row
+              .col-md-12
+                .form-group
+                  label#message.error #{jsonRes.message}
+          .row
+            .col-md-12
+              input#email.form-control(type='text' name='email' placeholder='Email')
+          .row
+            .col-md-12
+              input#password.form-control(type='password' name='password' placeholder='Password')
+          .row.justify-content-center
+            .col-auto
+              button#signin-btn.btn.btn-success.my-3 Signin
+          .row.justify-content-center
+            #forgot-password.col-auto.my-2
+              a(href='#') Forgot password?
+block body-script
+  script(src='http://127.0.0.1:1024/javascripts/signin.js')

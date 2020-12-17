@@ -4,53 +4,61 @@ import passport from './../../helpers/passport.js';
 
 class UserController {
   signup(req, res, next) {
-    passport.authenticate('signup', async (err, user, info) => {
-      if (err) return next(err);
-      if (err || !user) {
-        res.status(500).json({
-          status: 'failure',
-          message: 'Có lỗi xảy ra, vui lòng thử lại sau',
-          data: null
-        });
-      }
-
-      let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
-      res.status(200).json({
-        status: 'success',
-        message: info,
-        data: {
-          token
-        }
-      });
-    })(req, res, next);
+    let jsonRes = req.app.get('jsonRes');
+    
+    if (jsonRes) return res.render('components/user/signup.pug', { jsonRes });
+    return res.render('components/user/signup.pug');
   }
 
   signin(req, res, next) {
-    passport.authenticate('signin',
-      async (err, user, info) => {
-        if (err) return next(err);
-        if (!user) {
-          res.status(500).json({
-            status: 'failure',
-            message: info,
-            data: null
-          });
-        }
+    let jsonRes = req.app.get('jsonRes');
+    
+    if (jsonRes) return res.render('components/user/signin.pug', { jsonRes });
+    return res.render('components/user/signin.pug');
+  }
 
-        req.login(user, async (err) => {
-          if (err) return next(err);
+  signupHandler(req, res, next) {
+    passport.authenticate('signup', async (err, user, info) => {
+      let jsonRes = {
+        status: 'failure',
+        message: '',
+        data: null
+      };
 
-          let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
-          res.status(200).json({
-            status: 'success',
-            message: info,
-            data: {
-              token
-            }
-          });
-        });
+      if (err) return next(err);
+      if (err || !user) {
+        jsonRes.message = 'Có lỗi xảy ra, vui lòng thử lại sau';
+        req.app.set('jsonRes', jsonRes);
+        return res.redirect('/user/signup');
       }
-    )(req, res, next);
+
+      let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+      return res.redirect('/');
+    })(req, res, next);
+  }
+
+  signinHanler(req, res, next) {
+    passport.authenticate('signin', async (err, user, info) => {
+      let jsonRes = {
+        status: 'failure',
+        message: '',
+        data: null
+      };
+
+      if (err) return next(err);
+      if (!user) {
+        jsonRes.message = info;
+        req.app.set('jsonRes', jsonRes);
+        return res.redirect('/user/signin');
+      }
+
+      req.login(user, async (err) => {
+        if (err) return next(err);
+
+        let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+        return res.redirect('/');
+      });
+    })(req, res, next);
   }
 
   async forgotPassword(req, res, next) {}

@@ -3,7 +3,9 @@ class SiteController {
     res.render('index.pug');
   }
 
-  feeds(req, res, next) {}
+  feeds(req, res, next) {
+    res.render('components/site/feeds.pug');
+  }
 
   discovery(req, res, next) {}
 }
