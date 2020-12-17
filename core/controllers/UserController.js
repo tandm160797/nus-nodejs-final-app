@@ -5,6 +5,7 @@ import passport from './../../helpers/passport.js';
 class UserController {
   signup(req, res, next) {
     passport.authenticate('signup', async (err, user, info) => {
+      if (err) return next(err);
       if (err || !user) {
         res.status(500).json({
           status: 'failure',
@@ -13,7 +14,7 @@ class UserController {
         });
       }
 
-      let token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
+      let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
       res.status(200).json({
         status: 'success',
         message: info,
@@ -39,7 +40,7 @@ class UserController {
         req.login(user, async (err) => {
           if (err) return next(err);
 
-          let token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
+          let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
           res.status(200).json({
             status: 'success',
             message: info,
@@ -65,13 +66,9 @@ class UserController {
   async get(req, res, next) {
     passport.authenticate('jwt',
     async (err, user, info) => {
-      console.log(err);
-      console.log(user);
-      console.log(info);
       
-        
       res.json({
-        a: 'abc'
+        a: 'abcd'
       });
     }
   )(req, res, next);

@@ -18,6 +18,6 @@ router.get('/:id/followers/', userController.followers);
 router.get('/:id/', userController.show);
 router.get('/:id/edit/', userController.edit);
 router.put('/:id/', userController.update);
-router.get('/', userController.get);
+router.get('/', authentication, userController.get);
 
 export default router;

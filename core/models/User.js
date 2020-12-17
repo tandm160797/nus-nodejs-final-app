@@ -29,12 +29,12 @@ userSchema.methods.fullName = function() {
   return `${this.firstName} ${this.lastName}`;
 }
 
-userSchema.methods.verifyPassword = async function(password) {
-  return await bcrypt.compare(password, this.password);
+userSchema.methods.verifyPassword = function(password) {
+  return bcrypt.compare(password, this.password);
 }
 
-userSchema.pre('save', async function() {
-  this.password = await bcrypt.hash(this.password, 10);
+userSchema.pre('save', function() {
+  this.password = bcrypt.hash(this.password, 10);
 });
 
 export default mongoose.model('User', userSchema);

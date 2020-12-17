@@ -8,7 +8,7 @@ import User from './../core/models/User.js';
 
 let LocalStrategy = passportLocal.Strategy;
 let JwtStrategy = passportJwt.Strategy;
-let extractJWT = passportJwt.ExtractJwt;
+let extractJwt = passportJwt.ExtractJwt;
 let jwtSecretKey = process.env.JWT_SECRET_KEY;
 let authFields = {
   usernameField: 'email',
@@ -17,7 +17,7 @@ let authFields = {
 }
 let jwtOptions = {
   secretOrKey: jwtSecretKey,
-  jwtFromRequest: extractJWT.fromUrlQueryParameter('token'),
+  jwtFromRequest: extractJwt.fromUrlQueryParameter('token'),
   session: false,
   passReqToCallBack: true
 }
@@ -53,7 +53,6 @@ passport.use('signin', new LocalStrategy(authFields,
 
       let validate = await user.verifyPassword(password);
       if (!validate) return done(null, false, 'Mật khẩu không chính xác');
-
       return done(null, user, 'Đăng nhập thành công');
     } catch (err) {
       return done(err);
@@ -63,7 +62,14 @@ passport.use('signin', new LocalStrategy(authFields,
 
 passport.use(new JwtStrategy(jwtOptions,
   async (jwtPayload, done) => {
-    return done('321321321', '21', '12132131231');
+    try {
+      let user = await User.findById(jwtPayload.id).exec();
+
+      if (!user) return done(null, false, 'Token không hợp lệ');
+      return done(null, user, 'Xác thực thành công');
+    } catch (err) {
+      return done(err);
+    }
   })
 );
 
