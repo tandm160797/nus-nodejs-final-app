@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import expressSession from 'express-session';
+import momment from 'moment';
 
 import routes from './../routes/routes.js';
 import mongoDB from './../databases/MongoDB.js';
@@ -19,6 +20,8 @@ let sessionOptions = {
   resave: true
 }
 
+app.locals.env = process.env;
+app.locals.moment = momment;
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(passport.initialize());

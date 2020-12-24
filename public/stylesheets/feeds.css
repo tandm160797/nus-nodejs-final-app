@@ -1,0 +1,150 @@
+* {
+  font-size: 1.2rem;
+}
+
+.header {
+  background-color: var(--main-color);
+}
+
+header a, a:hover, a:focus {
+  text-decoration: none;
+  color: var(--white-color);
+}
+
+.header__homepage {
+  text-align: center;
+}
+
+.header__search-input {
+  padding: 16px;
+  font-size: 1.2rem;
+}
+
+.header__user-profile {
+  text-align: end;
+}
+
+.header__user-avatar {
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+}
+
+.header__user-link {
+  color: var(--white-color);
+  font-weight: bold;
+}
+
+.header__homepage-link {
+  font-size: 3.2rem;
+  font-weight: bold;
+  color: var(--white-color);
+}
+
+.header__user-action {
+  text-align: center;
+}
+
+.header__user-action-logout {
+  color: var(--white-color);
+  font-weight: bold;
+}
+
+.content {
+  background-color: #f8f8f8;
+}
+
+.content__left {
+  margin-top: 8px;
+}
+
+.content__mid {
+  background-color: #fff;
+}
+
+.content__left-link {
+  width: 52.66px;
+  margin: 0px auto;
+}
+
+.content__left-link--active {
+  color: var(--main-color) !important;
+}
+
+.content__left a {
+  color: #8c8c8c;
+  font-weight: bold;
+}
+
+.content__center {
+  background-color: var(--white-color);
+  margin-top: 8px;
+}
+
+.photo-album-button > a {
+  background-color: var(--white-color);
+  color: var(--main-color);
+  font-weight: bold;
+  border: 1px solid var(--main-color);
+  padding: 4px;
+}
+
+.photo-album-button--active {
+  background-color: var(--main-color) !important;
+  color: var(--white-color) !important;
+}
+
+.photo-component__right {
+  height: 300px;
+  background-color: #eee;
+  padding: 8px !important;
+  position: relative;
+}
+
+.photo-album-button {
+  margin-top: 16px;
+}
+
+.content-body {
+  margin-top: 8px;
+  padding: 0px 8px;
+}
+
+.loading {
+  margin-top: 8px;
+}
+
+.photo-component {
+  box-shadow: 1px 1px 1px 1px #999;
+}
+
+.photo-component {
+  margin: 8px 8px;
+}
+
+.info-profile__full-name {
+  font-weight: bold;
+  color: var(--main-color);
+  margin-left: 8px;
+}
+
+.info-profile > a,
+.info-profile > a:hover,
+.info-profile > a:focus {
+  text-decoration: none;
+  color: var(--main-color);
+}
+
+.info-title {
+  font-weight: bold;
+  margin: 16px 0px;
+}
+
+.info-link-and-time {
+  position: absolute;
+  top: 250px;
+}
+
+#a-like-photo:hover {
+  cursor: pointer;
+}

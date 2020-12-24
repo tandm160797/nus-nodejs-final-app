@@ -35,11 +35,11 @@ header a, a:hover, a:focus {
   background-color: #f8f8f8;
 }
 
-.signup-form {
+.signin-form {
   margin-top: 40px;
 }
 
-.signup-form-header {
+.signin-form-header {
   text-align: center;
   font-weight: bold;
   color: var(--main-color);
