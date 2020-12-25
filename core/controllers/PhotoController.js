@@ -12,6 +12,7 @@ class PhotoController {
     let token = req.query.token;
     let user = req.body.user;
     let msg = req.query.msg;
+
     return res.render('components/photo/new-photo.pug', { token, user, msg });
   }
 

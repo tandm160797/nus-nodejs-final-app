@@ -1,6 +1,6 @@
 extends ./../../layouts/layout-01.pug
 block head-script
-  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/feeds.css`)
+  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/feeds-photo.css`)
 block body-content
     .app
     .header.row.no-gutters.d-flex.align-items-center
@@ -31,7 +31,7 @@ block body-content
       .content__mid.col-md-8
         .photo-album-button.row.no-gutters.f-flex.justify-content-center
           a.photo-album-button--active.rounded-left(href=`${env.SERVER}/feeds/photo?token=${token}`) Photo
-          a.rounded-right(href='#') Album
+          a.rounded-right(href=`${env.SERVER}/feeds/album?token=${token}`) Album
         .content-body.row.no-gutters
           .row.no-gutters
             each photo in followingPhotos
@@ -41,7 +41,7 @@ block body-content
                     .photo-component__left.col-md-6.d-flex.justify-content-center.align-items-center
                       .photo-component__img
                         a(href='#')
-                          img.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photo.photoUrl}` alt=`${photo.photoUrl}` data-toggle="modal" data-target="#photo-modal" photo-title=`${photo.title}` photo-description=`${photo.description}`)
+                          img.img-thumbnail.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photo.photoUrl}` alt=`${photo.photoUrl}` data-toggle="modal" data-target="#photo-modal" photo-title=`${photo.title}` photo-description=`${photo.description}`)
                     .photo-component__right.col-md-6
                       .photo-component__info
                         .info-profile
@@ -74,6 +74,6 @@ block body-content
                 p#modal-footer
       .content__right.col-md-2
 block body-script
-  script(src=`${env.SERVER}/javascripts/feeds.js`)
+  script(src=`${env.SERVER}/javascripts/feeds-photo.js`)
   if token
     script!= `localStorage.setItem('token', '${token}');`
