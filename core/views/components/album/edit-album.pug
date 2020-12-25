@@ -1,0 +1,63 @@
+extends ./../../layouts/layout-01.pug
+block head-script
+  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/edit-album.css`)
+block body-content
+    .app
+    .header.row.no-gutters.d-flex.align-items-center
+      .header__homepage.col-md-2
+        a.header__homepage-link(href='#') Photobook
+      .header__search.col-md-4
+        form.header__search-form(method='post' action=`${env.SERVER}/photo/signin-handler`)
+          input.header__search-input.form-control(type='text' placeholder='Search Photo / Album')
+      .header__user-profile.col-md-4
+        if user
+          if user.avatarUrl
+            a(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`)
+              img.header__user-avatar.rounded-circle(src=`${env.SERVER}/images/${user.avatarUrl}` alt=`${user.avatarUrl}`)
+          else
+            a#user-avt(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`)
+              img.header__user-avatar.rounded-circle(src=`${env.SERVER}/images/default-avatar.png` alt='default-avatar')
+        if user
+          a#user-fullname.header__user-link(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.firstName} #{user.lastName}
+      .header__user-action.col-md-2
+        a#logout.header__user-action-logout(href=`${env.SERVER}/user/signin`) Logout
+    .content.row.no-gutters
+      .content__left.col-md-2
+        .content__left-link
+          div
+            a#feeds(href=`${env.SERVER}/feeds/photo?token=${token}`) Feeds
+          div
+            a#discover(href='#') Discover
+      .content__mid.col-md-8
+        .row.no-gutters.p-4
+          h3 Edit Photo
+        if msg
+          #msg.ml-4 #{msg}
+        hr
+        .row.no-gutters.p-4.d-flex
+          if photo
+            form#edit-photo-frm(method='post' action=`${env.SERVER}/photo/${photo._id}/?_method=PUT&token=${token}&userId=${photo.user._id}` enctype="multipart/form-data")
+              .form-group
+                label(for='photo-title') Title
+                input#photo-title.form-control(type='text' name='photo-title' placeholder='Photo title...' value=`${photo.title}`)
+              .form-group
+                label(for='photo-description') Description
+                textarea#photo-description.form-control(rows='5' name='photo-description' placeholder='Photo description...') #{photo.description}
+              .form-group
+                label(for='photo-sharing-mode') Sharing mode
+                select#photo-sharing-mode.form-control(name='photo-sharing-mode')
+                  if photo.mode === 'public'
+                    option(value='public' selected) Public
+                    option(value='private') Private
+                  if photo.mode === 'private'
+                    option(value='public') Public
+                    option(value='private' selected) Private
+              .form-group
+                input#photo-img.form-control-file(type='file' name='photo-img' value='sada')
+              .form-group.d-flex.justify-content-between
+                input#save-btn.btn.btn-success(type='submit' value='Save')
+                input#delete-btn.btn.btn-danger(value='Delete')
+            form#delete-photo-frm.d-none(method='post' action=`${env.SERVER}/photo/${photo._id}/?_method=DELETE&token=${token}&userId=${photo.user._id}`)
+        .content__right.col-md-2
+block body-script
+  script(src=`${env.SERVER}/javascripts/edit-album.js`)

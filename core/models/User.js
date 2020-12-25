@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
-
 import mongoose from 'mongoose';
+import mongooseDelete from 'mongoose-delete';
+
 
 let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;
@@ -20,9 +21,16 @@ let userSchema = new Schema({
   }],
   status: String,
   isAdmin: Boolean,
-  createddAt: Date,
-  updatedAt: Date,
-  deletedAt: Date
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
+  updatedAt: Date
+});
+
+userSchema.plugin(mongooseDelete, {
+  overrideMethods: 'all',
+  deletedAt : true
 });
 
 userSchema.methods.fullName = function() {
@@ -35,6 +43,11 @@ userSchema.methods.verifyPassword = async function(password) {
 
 userSchema.pre('save', async function() {
   this.password = await bcrypt.hash(this.password, 10);
+
+  // Handler updatedAt filed
+  if (this.createdAt) {
+    this.updatedAt = new Date
+  }
 });
 
 export default mongoose.model('User', userSchema);

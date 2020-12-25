@@ -20,13 +20,19 @@ let photoSchema = new Schema({
     type: Date,
     default: new Date(),
   },
-  updatedAt: Date,
-  deletedAt: Date
+  updatedAt: Date
 });
 
 photoSchema.plugin(mongooseDelete, {
   overrideMethods: 'all',
   deletedAt : true
+});
+
+photoSchema.pre('save', async function() {
+  // Handler updatedAt filed
+  if (this.createdAt) {
+    this.updatedAt = new Date
+  }
 });
 
 export default mongoose.model('Photo', photoSchema);

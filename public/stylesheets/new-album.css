@@ -141,6 +141,33 @@ label.error{
   font-weight: 100;
 }
 
-#new-photo-frm {
+#add-photo-icon:hover, #photo-remove:hover {
+  cursor: pointer;
+}
+
+.photo-album {
+  width: 160px;
+  height: 160px;
+  background-color: var(--text-color);
+  border-radius: 2px;
+}
+
+#add-photo-icon {
+  color: var(--white-color);
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+#photo-remove {
+  top: 0px;
+  right: 0px;
+  width: 16px;
+  height: 16px;
+  color: var(--white-color);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#new-album-frm {
   width: 360px;
 }

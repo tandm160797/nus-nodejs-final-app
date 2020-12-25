@@ -1,0 +1,80 @@
+extends ./../../layouts/layout-01.pug
+block head-script
+  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/feeds-album.css`)
+block body-content
+    .app
+    .header.row.no-gutters.d-flex.align-items-center
+      .header__homepage.col-md-2
+        a.header__homepage-link(href='#') Photobook
+      .header__search.col-md-4
+        form.header__search-form
+          input.header__search-input.form-control(type='text' placeholder='Search Photo / Album')
+      .header__user-profile.col-md-4
+        if user
+          if user.avatarUrl
+            a(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`)
+              img.header__user-avatar.rounded-circle(src=`${env.SERVER}/images/${user.avatarUrl}` alt=`${user.avatarUrl}`)
+          else
+            a#user-avt(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`)
+              img.header__user-avatar.rounded-circle(src=`${env.SERVER}/images/default-avatar.png` alt='default-avatar')
+        if user
+          a#user-fullname.header__user-link(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.firstName} #{user.lastName}
+      .header__user-action.col-md-2
+        a#logout.header__user-action-logout(href=`${env.SERVER}/user/signin`) Logout
+    .content.row.no-gutters
+      .content__left.col-md-2
+        .content__left-link
+          div
+            a.content__left-link--active(href=`${env.SERVER}/feeds/photo?token=${token}`) Feeds
+          div
+            a#discover(href='#') Discover
+      .content__mid.col-md-8
+        .photo-album-button.row.no-gutters.f-flex.justify-content-center
+          a.rounded-left(href=`${env.SERVER}/feeds/photo?token=${token}`) Photo
+          a.photo-album-button--active.rounded-right(href=`${env.SERVER}/feeds/album?token=${token}`) Album
+        .content-body.row.no-gutters
+          .row.no-gutters
+            each album in followingAlbums
+              .col-md-6
+                .photo-component
+                  .row.no-gutters
+                    .photo-component__left.col-md-6.d-flex.justify-content-center.align-items-center
+                      .photo-component__img.position-relative
+                        img#img-1.img-thumbnail.photo-img.figure-img.img-fluid.rounded.img(src=`${env.SERVER}/images/img02.jpg` alt=`abc` data-toggle="modal" data-target="#photo-modal" photo-title=`abc` photo-description=`abc`)
+                        img#img-2.position-absolute.img-thumbnail.photo-img.figure-img.img-fluid.rounded.img(src=`${env.SERVER}/images/img02.jpg` alt=`abc` data-toggle="modal" data-target="#photo-modal" photo-title=`abc` photo-description=`abc`)
+                        img#img-3.position-absolute.img-thumbnail.photo-img.figure-img.img-fluid.rounded.img(src=`${env.SERVER}/images/img02.jpg` alt=`abc` data-toggle="modal" data-target="#photo-modal" photo-title=`abc` photo-description=`abc`)
+                    .photo-component__right.col-md-6
+                      .photo-component__info
+                        .info-profile
+                          a(href='#')
+                            img.info-profile__avt(src=`${env.SERVER}/images/default-avatar.png` width='34px' height='34px')
+                          a.info-profile__full-name(href='#') #{album.user.firstName} #{album.user.lastName}
+                        .info-title
+                          div #{album.title}
+                        .info-description
+                          div #{album.description}
+                        .info-link-and-time.d-flex.justify-content-between
+                          #a-like-photo.a-like-photo.mr-4(album-id=`${album._id}` token=`${token}` server=`${env.SERVER}`)
+                            i.like-count.fas.fa-heart(style='color: #3c599b;')  #{album.likeCount}
+                          div #{moment(album.createdAt).format('h:mm A, MMM D YYYY')}
+        .loading.row.no-gutters
+        #photo-modal.modal.fade(tabindex='-1' role='dialog' aria-hidden='true')
+          .modal-dialog.modal-dialog-centered.modal-md(role='document')
+            .modal-content
+              .modal-header
+                h6#modal-title.modal-title
+                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                  span(aria-hidden='true') &times;
+              .modal-body
+                .bg-secondary
+                  .carousel.slide.slide-album(data-ride='carousel')
+                    .carousel-inner.slider-container
+                      .carousel-item.active
+                        img#modal-img.d-block.img-fluid(src="#")
+              .modal-footer
+                p#modal-footer
+      .content__right.col-md-2
+block body-script
+  script(src=`${env.SERVER}/javascripts/feeds-album.js`)
+  if token
+    script!= `localStorage.setItem('token', '${token}');`

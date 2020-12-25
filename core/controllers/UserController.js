@@ -92,6 +92,22 @@ class UserController {
     return res.render('components/user/photo-profile.pug', { token, user });
   }
 
+  async profileAlbum(req, res, next) {
+    let token = req.query.token;
+    let user = req.body.user;
+    let photos = await Photo.find({user: user._id}).exec();
+    let albums = await Album.find({user: user._id}).exec();
+    let photoCount = await Photo.find({user: user._id}).countDocuments().exec();
+    let albumCount = await Album.find({user: user._id}).countDocuments().exec();
+
+    user.photoCount = photoCount;
+    user.albumCount = albumCount;
+    user.photos = photos;
+    user.albums = albums;
+    
+    return res.render('components/user/album-profile.pug', { token, user });
+  }
+
   async publicProfile(req, res, next) {}
   async followings(req, res, next) {}
   async followers(req, res, next) {}

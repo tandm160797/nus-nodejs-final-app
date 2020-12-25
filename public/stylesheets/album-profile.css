@@ -131,16 +131,42 @@ header a, a:hover, a:focus {
   text-decoration: none;
 }
 
-label.error{
-  color: red;
-  font-weight: 100;
+.figure > a,
+.figure > a:hover,
+.figure > a:focus {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text-color);
+}
+.block:hover {
+  cursor: pointer;
 }
 
-#msg{
-  color: green;
-  font-weight: 100;
+.block {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: var(--white-color) !important;
 }
 
-#new-photo-frm {
-  width: 360px;
+.edit {
+  font-size: 10px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 24px;
+  right: 4px;
+  background-color: var(--white-color) !important;
 }

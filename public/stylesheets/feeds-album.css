@@ -26,7 +26,7 @@ header a, a:hover, a:focus {
 
 .header__user-avatar {
   width: 34px;
-  height: 34px; 
+  height: 34px;
   margin-right: 8px;
 }
 
@@ -95,8 +95,10 @@ header a, a:hover, a:focus {
 }
 
 .photo-component__right {
+  height: 300px;
   background-color: #eee;
   padding: 8px !important;
+  position: relative;
 }
 
 .photo-album-button {
@@ -112,35 +114,59 @@ header a, a:hover, a:focus {
   margin-top: 8px;
 }
 
-.link-profile > a,
-.link-profile > a:hover,
-.link-profile > a:focus {
+.photo-component {
+  box-shadow: 1px 1px 1px 1px #999;
+}
+
+.photo-component {
+  margin: 8px 8px;
+  padding-left: 16px;
+}
+
+.info-profile__full-name {
   font-weight: bold;
+  color: var(--main-color);
+  margin-left: 8px;
+}
+
+.info-profile > a,
+.info-profile > a:hover,
+.info-profile > a:focus {
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--main-color);
 }
 
-.link-profile--active {
-  color: var(--main-color) !important;
+.info-title {
+  font-weight: bold;
+  margin: 16px 0px;
 }
 
-.btn-following a {
-  border-radius: 28px;
-  background-image: linear-gradient(#DC5D57, #FB9D4C);
-  color: white;
-  text-decoration: none;
+.info-link-and-time {
+  position: absolute;
+  top: 250px;
 }
 
-label.error{
-  color: red;
-  font-weight: 100;
+#a-like-photo:hover {
+  cursor: pointer;
 }
 
-#msg{
-  color: green;
-  font-weight: 100;
+.photo-component__left:hover {
+  cursor: pointer;
 }
 
-#new-photo-frm {
-  width: 360px;
+.img {
+  top: 0px;
+  left: 0px;
+}
+
+#img-1 {
+  transform: rotate(7deg);
+}
+
+#img-2 {
+  transform: rotate(3deg);
+}
+
+#img-3 {
+  transform: rotate(0deg);
 }

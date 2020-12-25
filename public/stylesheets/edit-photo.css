@@ -140,3 +140,7 @@ label.error{
   color: green;
   font-weight: 100;
 }
+
+#edit-photo-frm {
+  width: 360px;
+}
