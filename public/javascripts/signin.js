@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
   // Focus input email
   $('#email:input').focus();

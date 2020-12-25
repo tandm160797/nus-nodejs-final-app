@@ -1,0 +1,69 @@
+extends ./../../layouts/layout-01.pug
+block head-script
+  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/photo-profile.css`)
+  
+block body-content
+    .app
+    .header.row.no-gutters.d-flex.align-items-center
+      .header__homepage.col-md-2
+        a.header__homepage-link(href='#') Photobook
+      .header__search.col-md-4
+        form.header__search-form
+          input.header__search-input.form-control(type='text' placeholder='Search Photo / Album')
+      .header__user-profile.col-md-4
+        if user
+          if user.avatarUrl
+            a(href=`${env.SERVER}/user/${user._id}/profile/photo/?token=${token}`)
+              img.header__user-avatar.rounded-circle(src=`${env.SERVER}/images/${user.avatarUrl}` alt=`${user.avatarUrl}`)
+          else
+            a#user-avt(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`)
+              img.header__user-avatar.rounded-circle(src=`${env.SERVER}/images/default-avatar.png` alt='default-avatar')
+        if user
+          a#user-fullname.header__user-link(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.firstName} #{user.lastName}
+      .header__user-action.col-md-2
+        a#logout.header__user-action-logout(href=`${env.SERVER}/user/signin`) Logout
+    .content.row.no-gutters
+      .content__left.col-md-2
+        .content__left-link
+          div
+            a(href=`${env.SERVER}/feeds/photo?token=${token}`) Feeds
+          div
+            a#discover(href='#') Discover
+      .content__mid.col-md-8
+        .row.p-4.d-flex.align-items-center
+          if user
+            .col-md-3
+              if user.avatarUrl
+                img.rounded-circle(src=`${env.SERVER}/images/${user.avatarUrl}` alt=`${user.avatarUrl}` width='100%')
+              else
+                img.rounded-circle(src=`${env.SERVER}/images/default-avatar.png` alt='default-avatar' width='100%')
+            .col-md-9
+              div
+                span.btn-following
+                  a.p-2(href='#') Edit Profile
+              .my-4
+                h3 #{user.firstName} #{user.lastName}
+              .link-profile.d-flex
+                a.pr-4.border-right.link-profile--active(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.photoCount} PHOTOS
+                a.px-4.border-right(href='#') #{user.albumCount} ALBUMS
+                a.px-4.border-right(href='#') #{user.followings.length} FOLLOWINGS
+                a.pl-4(href='#') #{user.followers.length} FOLLOWGERS
+        .row.mt-4.p-4.d-flex.justify-content-end
+          a#add-photo.btn.btn-success.mr-4(href=`${env.SERVER}/photo/new?token=${token}`) Add Photo
+        .row.mt-4.p-4
+          each photo in user.photos
+            .col-md-3.p-4
+              figure.figure.position-relative
+                img.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photo.photoUrl}` alt=`${photo.photoUrl}` data-toggle="modal" data-target="#photo-modal" photo-title=`${photo.title}` photo-description=`${photo.description}`)
+                figcaption.figure-caption.text-center #{photo.title}
+                if photo.mode === 'private'
+                  span.block(server=`${env.SERVER}` photo-id=`${photo._id}` token=`${token}`)
+                    i.fas.fa-lock
+                a(href=`${env.SERVER}/photo/${photo._id}/edit/?token=${token}`)
+                  span.edit Edit
+
+        .loading.row.no-gutters
+
+      .content__right.col-md-2
+block body-script
+  script(src=`${env.SERVER}/javascripts/photo-profile.js`)

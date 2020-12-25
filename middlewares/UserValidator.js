@@ -36,8 +36,7 @@ class UserValidator {
     };
 
     if (!isValid) {
-      req.app.set('jsonRes', jsonRes);
-      return res.redirect('/user/signup');
+      return res.redirect(`/user/signup?res=${encodeURIComponent(JSON.stringify(jsonRes))}`);
     }
     return next();
   }
@@ -66,8 +65,7 @@ class UserValidator {
     }
 
     if (!isValid) {
-      req.app.set('jsonRes', jsonRes);
-      return res.redirect('/user/signin');
+      return res.redirect(`/user/signin?res=${encodeURIComponent(JSON.stringify(jsonRes))}`);
     }
     return next();
   }
