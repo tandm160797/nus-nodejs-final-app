@@ -66,4 +66,36 @@ $(document).ready(function () {
       'photo-img': messagesValidation.photoImg
     }
   });
+
+  // Handler add photos for album.
+  let photoAlbum = $('.photo-album');
+  let photoImg = $('#photo-img');
+  let addPhotoIcon = $('#add-photo-icon');
+
+  addPhotoIcon.on('click', (evt) => {
+    photoImg.trigger('click');
+  });
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      if (input.files[0].type === 'image/jpeg') {
+        let reader = new FileReader();
+        reader.onload = function(evt) {
+          photoAlbum.css('background-image', `url(${ evt.target.result })`);
+          photoAlbum.css('background-size', '100% 100%');
+          addPhotoIcon.hide();
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  }
+  photoImg.on('change', function(evt) {
+    readURL(this);
+  });
+
+  // Handler cancel add photos for album
+  let photoRemove = $('#photo-remove');
+  photoRemove.on('click', function(evt) {
+    photoAlbum.css('background-image', 'none');
+    addPhotoIcon.show();
+  });
 });

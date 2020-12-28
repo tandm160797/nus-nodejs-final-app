@@ -5,7 +5,10 @@ block body-content
     .app
     .header.row.no-gutters.d-flex.align-items-center
       .header__homepage.col-md-2
-        a.header__homepage-link(href='#') Photobook
+        if token
+          a.header__homepage-link(href=`${env.SERVER}?token=${token}`) Photobook
+        else
+          a.header__homepage-link(href=`${env.SERVER}`) Photobook
       .header__search.col-md-4
         form.header__search-form(method='post' action=`${env.SERVER}/photo/signin-handler`)
           input.header__search-input.form-control(type='text' placeholder='Search Photo / Album')
@@ -27,37 +30,42 @@ block body-content
           div
             a#feeds(href=`${env.SERVER}/feeds/photo?token=${token}`) Feeds
           div
-            a#discover(href='#') Discover
+            a#feeds(href=`${env.SERVER}/discover/photo?token=${token}`) Discover
       .content__mid.col-md-8
         .row.no-gutters.p-4
-          h3 Edit Photo
+          h3 Edit Album
         if msg
           #msg.ml-4 #{msg}
         hr
         .row.no-gutters.p-4.d-flex
-          if photo
-            form#edit-photo-frm(method='post' action=`${env.SERVER}/photo/${photo._id}/?_method=PUT&token=${token}&userId=${photo.user._id}` enctype="multipart/form-data")
+          if album
+            form#edit-album-frm(method='post' action=`${env.SERVER}/album/${album._id}/?_method=PUT&token=${token}&userId=${album.user._id}` enctype="multipart/form-data")
               .form-group
-                label(for='photo-title') Title
-                input#photo-title.form-control(type='text' name='photo-title' placeholder='Photo title...' value=`${photo.title}`)
+                label(for='album-title') Title
+                input#album-title.form-control(type='text' name='album-title' placeholder='album title...' value=`${album.title}`)
               .form-group
-                label(for='photo-description') Description
-                textarea#photo-description.form-control(rows='5' name='photo-description' placeholder='Photo description...') #{photo.description}
+                label(for='album-description') Description
+                textarea#album-description.form-control(rows='5' name='album-description' placeholder='album description...') #{album.description}
               .form-group
-                label(for='photo-sharing-mode') Sharing mode
-                select#photo-sharing-mode.form-control(name='photo-sharing-mode')
-                  if photo.mode === 'public'
+                label(for='album-sharing-mode') Sharing mode
+                select#album-sharing-mode.form-control(name='album-sharing-mode')
+                  if album.mode === 'public'
                     option(value='public' selected) Public
                     option(value='private') Private
-                  if photo.mode === 'private'
+                  if album.mode === 'private'
                     option(value='public') Public
                     option(value='private' selected) Private
+              each photo in album.photosUrl
+                .form-group#photo-album.d-flex.justify-content-center.align-items-center(style={'background-image': `url(${env.SERVER}${photo})`, 'background-size': '100% 100%'})
+              .form-group.photo-album.d-flex.justify-content-center.align-items-center.position-relative
+                i#photo-remove.fas.fa-times.position-absolute.d-flex.justify-content-center.align-items-center
+                #add-photo-icon +
               .form-group
-                input#photo-img.form-control-file(type='file' name='photo-img' value='sada')
+                input#photo-img.form-control-file.invisible(type='file' name='photo-img')
               .form-group.d-flex.justify-content-between
                 input#save-btn.btn.btn-success(type='submit' value='Save')
                 input#delete-btn.btn.btn-danger(value='Delete')
-            form#delete-photo-frm.d-none(method='post' action=`${env.SERVER}/photo/${photo._id}/?_method=DELETE&token=${token}&userId=${photo.user._id}`)
+            form#delete-album-frm.d-none(method='post' action=`${env.SERVER}/album/${album._id}/?_method=DELETE&token=${token}&userId=${album.user._id}`)
         .content__right.col-md-2
 block body-script
   script(src=`${env.SERVER}/javascripts/edit-album.js`)

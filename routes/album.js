@@ -14,5 +14,7 @@ router.post('/', authentication, upload.single('photo-img'), albumController.cre
 router.get('/:id/edit/', authentication, albumController.edit);
 router.put('/:id/', upload.single('photo-img'), albumController.update);
 router.delete('/:id/', albumController.destroy);
+router.patch('/:id/like/', authentication, albumController.liked);
+router.patch('/:id/public/', authentication, albumController.public);
 
 export default router;

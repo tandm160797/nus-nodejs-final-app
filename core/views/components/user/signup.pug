@@ -5,7 +5,10 @@ block body-content
   .app
     .header.row.no-gutters.d-flex.align-items-center
       .header__homepage.col-md-2
-        a.header__homepage-link(href='#') Photobook
+        if token
+          a.header__homepage-link(href=`${env.SERVER}?token=${token}`) Photobook
+        else
+          a.header__homepage-link(href=`${env.SERVER}`) Photobook
       .header__search.col-md-4
       .col-md-4
       .header__user-action.col-md-2

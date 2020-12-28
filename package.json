@@ -4,7 +4,7 @@
   "description": "Photobook project - final app NodeJS of NUSTechnology.",
   "main": "./core/app.js",
   "scripts": {
-    "install-dependencies": "npm install",
+    "dev": "npm install && nodemon -r dotenv/config . dotenv_config_path=./.env",
     "start": "nodemon -r dotenv/config . dotenv_config_path=./.env"
   },
   "keywords": [

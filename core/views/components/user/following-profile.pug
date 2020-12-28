@@ -1,6 +1,6 @@
 extends ./../../layouts/layout-01.pug
 block head-script
-  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/photo-profile.css`)
+  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/following-profile.css`)
   
 block body-content
     .app
@@ -47,23 +47,26 @@ block body-content
               .my-4
                 h3 #{user.firstName} #{user.lastName}
               .link-profile.d-flex
-                a.pr-4.border-right.link-profile--active(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.photoCount} PHOTOS
+                a.pr-4.border-right(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.photoCount} PHOTOS
                 a.px-4.border-right(href=`${env.SERVER}/user/${user._id}/profile/album?token=${token}`) #{user.albumCount} ALBUMS
-                a.px-4.border-right(href=`${env.SERVER}/user/${user._id}/profile/following?token=${token}`) #{user.followings.length} FOLLOWINGS
+                a.px-4.border-right.link-profile--active(href=`${env.SERVER}/user/${user._id}/profile/following?token=${token}`) #{user.followings.length} FOLLOWINGS
                 a.pl-4(href=`${env.SERVER}/user/${user._id}/profile/follower?token=${token}`) #{user.followers.length} FOLLOWERS
-        .row.mt-4.p-4.d-flex.justify-content-end
-          a#add-photo.btn.btn-success.mr-4(href=`${env.SERVER}/photo/new?token=${token}`) Add Photo
         .row.mt-4.p-4
-          each photo in user.photos
+          each following in user.followings
             .col-md-3.p-4
-              figure.figure.position-relative
-                img.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photo.photoUrl}` alt=`${photo.photoUrl}` data-toggle="modal" data-target="#photo-modal" photo-title=`${photo.title}` photo-description=`${photo.description}`)
-                figcaption.figure-caption.text-center #{photo.title}
-                if photo.mode === 'private'
-                  span.block(server=`${env.SERVER}` photo-id=`${photo._id}` token=`${token}`)
-                    i.fas.fa-lock
-                a(href=`${env.SERVER}/photo/${photo._id}/edit/?token=${token}`)
-                  span.edit Edit
+              .following-component
+                .avt.m-4
+                  if !following.avatarUrl
+                    img.rounded-circle(src=`${env.SERVER}/images/default-avatar.png` width='64' height='64')
+                  if following.avatarUrl
+                    img.rounded-circle(src=`${env.SERVER}${following.avatarUrl}` width='64' height='64')
+                .full-name.m-4
+                  b #{following.firstName} #{following.lastName}
+                .photos-and-albums.d-flex.justify-content-between.m-4
+                  .pl-4 #{following.photoCount} PHOTOS
+                  .pr-4 #{following.albumCount} ALBUMS
+                .follow-status.m-4
+                  button.btn.btn-success(type='button' disabled) following
         .loading.row.no-gutters
         #photo-modal.modal.fade(tabindex='-1' role='dialog' aria-hidden='true')
           .modal-dialog.modal-dialog-centered.modal-md(role='document')
@@ -82,4 +85,4 @@ block body-content
                 p#modal-footer
       .content__right.col-md-2
 block body-script
-  script(src=`${env.SERVER}/javascripts/photo-profile.js`)
+  script(src=`${env.SERVER}/javascripts/following-profile.js`)

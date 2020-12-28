@@ -20,10 +20,28 @@ class SiteController {
     return res.render('components/site/feeds-album.pug', {token, user, followingAlbums});
   }
 
-  discoveryPhoto(req, res, next) {}
-  discoveryAlbum(req, res, next) {}
+  async discoveryPhoto(req, res, next) {
+    let token = req.query.token;
+    let user = req.body.user;
+    let followingPhotos = await Photo.find({mode: 'public'}).populate('user').sort({createdAt: -1}).exec();
+
+    return res.render('components/site/discover-photo.pug', {token, user, followingPhotos});
+  }
+
+  async discoveryAlbum(req, res, next) {
+    let token = req.query.token;
+    let user = req.body.user;
+    let followingAlbums = await Album.find({mode: 'public'}).populate('user').sort({createdAt: -1}).exec();
+
+    return res.render('components/site/discover-album.pug', {token, user, followingAlbums});
+  }
+
   index(req, res, next) {
-    return res.render('components/album/new-album.pug');
+    let token = req.query.token;
+    if (token) {
+      return res.redirect(`feeds/photo?token=${token}`);
+    }
+    return res.render('components/user/signin.pug');
   }
 }
 

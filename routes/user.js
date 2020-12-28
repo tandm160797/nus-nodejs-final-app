@@ -13,11 +13,13 @@ router.post('/signup-handler/', userValidator.signup, userController.signupHandl
 router.post('/signin-handler/', userValidator.signin, userController.signinHandler);
 router.post('/forgot-password/', userController.forgotPassword);
 router.post('/reset-password/:id/', userController.resetPassword);
-router.patch('/:id/follow/:user-id/', userController.follow);
-router.patch('/:id/unfollow/:user-id/', userController.unfollow);
+router.patch('/:id/follow/:userId/', authentication, userController.follow);
+router.patch('/:id/unfollow/:userId/', authentication, userController.unfollow);
 router.get('/:id/profile/photo', authentication, userController.profilePhoto);
 router.get('/:id/profile/album', authentication, userController.profileAlbum);
-router.get('/:id/public-profile/', userController.publicProfile);
+router.get('/:id/profile/following', authentication, userController.profileFollowing);
+router.get('/:id/profile/follower', authentication, userController.profileFollower);
+router.get('/:id/public-profile/photo', authentication, userController.publicProfilePhoto);
 router.get('/:id/followings/', userController.followings);
 router.get('/:id/followers/', userController.followers);
 router.get('/:id/', userController.show);

@@ -95,6 +95,7 @@ class PhotoController {
     let photo = await Photo.findByIdAndUpdate(photoId, {$inc: {likeCount: 1}}).exec();
     return res.status(200).json(++photo.likeCount);
   }
+  
   async public(req, res, next) {
     let photoId = req.params.id;
     let photo = await Photo.findByIdAndUpdate(photoId, {$set: {mode: 'public'}}).exec();

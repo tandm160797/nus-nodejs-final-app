@@ -33,4 +33,25 @@ $(document).ready(function() {
       });
     });
   });
+
+  // Handler follow action.
+  let followAction = $('#follow-action');
+  followAction.on('click', (evt) => {
+    evt.preventDefault();
+    let href = followAction.attr('href');
+    let url = `${href}?_method=PATCH&token=${followAction.attr('token')}`;
+    $.ajax({
+      url,
+      type: 'POST',
+      dataType: 'json'
+    }).done(function(data) {
+      if (data.value === 'follow') {
+        followAction.attr('href', (href.replace('unfollow', 'follow')));
+      }
+      if (data.value === 'following') {
+        followAction.attr('href', (href.replace('follow', 'unfollow')));
+      }
+      followAction.html(data.value);
+    });
+  });
 });

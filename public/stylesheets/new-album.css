@@ -152,6 +152,13 @@ label.error{
   border-radius: 2px;
 }
 
+#photo-album {
+  width: 160px;
+  height: 160px;
+  background-color: var(--text-color);
+  border-radius: 2px;
+}
+
 #add-photo-icon {
   color: var(--white-color);
   font-size: 5rem;

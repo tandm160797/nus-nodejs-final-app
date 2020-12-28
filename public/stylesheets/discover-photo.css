@@ -26,7 +26,7 @@ header a, a:hover, a:focus {
 
 .header__user-avatar {
   width: 34px;
-  height: 34px; 
+  height: 34px;
   margin-right: 8px;
 }
 
@@ -95,8 +95,10 @@ header a, a:hover, a:focus {
 }
 
 .photo-component__right {
+  height: 300px;
   background-color: #eee;
   padding: 8px !important;
+  position: relative;
 }
 
 .photo-album-button {
@@ -112,65 +114,37 @@ header a, a:hover, a:focus {
   margin-top: 8px;
 }
 
-.link-profile > a,
-.link-profile > a:hover,
-.link-profile > a:focus {
+.photo-component {
+  box-shadow: 1px 1px 1px 1px #999;
+}
+
+.photo-component {
+  margin: 8px 8px;
+}
+
+.info-profile__full-name {
   font-weight: bold;
+  color: var(--main-color);
+  margin-left: 8px;
+}
+
+.info-profile > a,
+.info-profile > a:hover,
+.info-profile > a:focus {
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--main-color);
 }
 
-.link-profile--active {
-  color: var(--main-color) !important;
-}
-
-.btn-following a {
-  border-radius: 28px;
-  background-image: linear-gradient(#DC5D57, #FB9D4C);
-  color: white;
-  text-decoration: none;
-}
-
-.figure > a,
-.figure > a:hover,
-.figure > a:focus {
+.info-title {
   font-weight: bold;
-  text-decoration: none;
-  color: var(--text-color);
-}
-.block:hover {
-  cursor: pointer;
+  margin: 16px 0px;
 }
 
-.block {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  text-align: center;
-  line-height: 20px;
-  border: 1px solid black;
-  border-radius: 50%;
+.info-link-and-time {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  background-color: var(--white-color) !important;
+  top: 250px;
 }
 
-.edit {
-  font-size: 10px;
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  text-align: center;
-  line-height: 20px;
-  border: 1px solid black;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 24px;
-  right: 4px;
-  background-color: var(--white-color) !important;
-}
-
-.photo-img:hover {
+#a-like-photo:hover {
   cursor: pointer;
 }

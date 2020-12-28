@@ -1,7 +1,18 @@
+
 $(document).ready(function() {
-  // Remove token.
+
+  // // Handler click link content left.
+  // let contentLeftLinks = $('.content__left-link a');
+  // contentLeftLinks.each((index, element) => {
+  //   $(element).on('click', (evt) => {
+  //     $(element).addClass('content__left-link--active');
+  //   });
+  // });
+
+  // Logout.
   let logoutLink = $('#logout');
   logoutLink.on('click', (evt) => {
+    logoutLink.attr('href', '/user/signin');
     window.localStorage.removeItem('token');
   });
 
@@ -18,18 +29,20 @@ $(document).ready(function() {
       $(modalFooter).html($(element).attr('photo-description'));
     });
   });
-  
-  // Handler public photos.
-  let blocks = $('.block');
-  blocks.each((index, element) => {
+
+  // Handler action like photo
+  let aTagLikePhoto = $('.a-like-photo');
+  let likeCount = $('.like-count');
+
+  aTagLikePhoto.each((index, element) => {
     $(element).on('click', (evt) => {
-      let url = `${$(element).attr('server')}/photo/${$(element).attr('photo-id')}/public?_method=PATCH&token=${$(element).attr('token')}`;
+      let url = `${$(element).attr('server')}/photo/${$(element).attr('photo-id')}/like?_method=PATCH&token=${$(element).attr('token')}`;
       $.ajax({
         url,
         type: 'POST',
         dataType: 'json'
       }).done(function(data) {
-        $(element).hide();
+        $(likeCount.get(index)).html(` ${data}`);
       });
     });
   });

@@ -6,7 +6,10 @@ block body-content
     .app
     .header.row.no-gutters.d-flex.align-items-center
       .header__homepage.col-md-2
-        a.header__homepage-link(href='#') Photobook
+        if token
+          a.header__homepage-link(href=`${env.SERVER}?token=${token}`) Photobook
+        else
+          a.header__homepage-link(href=`${env.SERVER}`) Photobook
       .header__search.col-md-4
         form.header__search-form
           input.header__search-input.form-control(type='text' placeholder='Search Photo / Album')
@@ -28,7 +31,7 @@ block body-content
           div
             a(href=`${env.SERVER}/feeds/photo?token=${token}`) Feeds
           div
-            a#discover(href='#') Discover
+            a#feeds(href=`${env.SERVER}/discover/photo?token=${token}`) Discover
       .content__mid.col-md-8
         .row.p-4.d-flex.align-items-center
           if user
@@ -46,24 +49,50 @@ block body-content
               .link-profile.d-flex
                 a.pr-4.border-right(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.photoCount} PHOTOS
                 a.px-4.border-right.link-profile--active(href=`${env.SERVER}/user/${user._id}/profile/album?token=${token}`) #{user.albumCount} ALBUMS
-                a.px-4.border-right(href='#') #{user.followings.length} FOLLOWINGS
-                a.pl-4(href='#') #{user.followers.length} FOLLOWGERS
+                a.px-4.border-right(href=`${env.SERVER}/user/${user._id}/profile/following?token=${token}`) #{user.followings.length} FOLLOWINGS
+                a.pl-4(href=`${env.SERVER}/user/${user._id}/profile/follower?token=${token}`) #{user.followers.length} FOLLOWERS
         .row.mt-4.p-4.d-flex.justify-content-end
           a#add-album.btn.btn-success.mr-4(href=`${env.SERVER}/album/new?token=${token}`) Add Album
         .row.mt-4.p-4
-          each photo in user.photos
+          each album in user.albums
             .col-md-3.p-4
-              figure.figure.position-relative
-                img.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photo.photoUrl}` alt=`${photo.photoUrl}` data-toggle="modal" data-target="#photo-modal" photo-title=`${photo.title}` photo-description=`${photo.description}`)
-                figcaption.figure-caption.text-center #{photo.title}
-                if photo.mode === 'private'
-                  span.block(server=`${env.SERVER}` photo-id=`${photo._id}` token=`${token}`)
+              figure.photo-album.figure.position-relative(data-toggle="modal" data-target="#album-modal" album-title=`${album.title}` album-description=`${album.description}` album-photos-url=`${album.photosUrl}`)
+                each photoUrl, index in album.photosUrl
+                  if index === 3
+                    - break
+                  if index === 0
+                    img.img-thumbnail.img.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photoUrl}` alt=`${photoUrl}` id=`img-${index}`)
+                  else
+                    img.img-thumbnail.img.position-absolute.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photoUrl}` alt=`${photoUrl}` id=`img-${index}`)
+                .photo-count.position-absolute.d-flex.justify-content-center.align-items-center
+                  .div #{album.photosUrl.length}
+                    div PHOTOS
+                figcaption.figure-caption.text-center #{album.title}
+                if album.mode === 'private'
+                  span.block(server=`${env.SERVER}` album-id=`${album._id}` token=`${token}`)
                     i.fas.fa-lock
-                a(href=`${env.SERVER}/photo/${photo._id}/edit/?token=${token}`)
+                a(href=`${env.SERVER}/album/${album._id}/edit/?token=${token}`)
                   span.edit Edit
-
         .loading.row.no-gutters
-
+        #album-modal.modal.fade(tabindex='-1' role='dialog' aria-hidden='true')
+          .modal-dialog.modal-dialog-centered.modal-md(role='document')
+            .modal-content
+              .modal-header
+                h3#modal-title.modal-title
+                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                  span(aria-hidden='true') &times;
+              .modal-body
+                .bg-secondary
+                  #album-carousel.carousel.slide.slide-album(data-ride='carousel')
+                    #show-album.carousel-inner.slider-container
+                    a.carousel-control-prev(href='#album-carousel' role='button' data-slide='prev')
+                      span.carousel-control-prev-icon(aria-hidden='true')
+                      span.sr-only Previous
+                    a.carousel-control-next(href='#album-carousel' role='button' data-slide='next')
+                      span.carousel-control-next-icon(aria-hidden='true')
+                      span.sr-only Next
+              .modal-footer
+                #modal-footer
       .content__right.col-md-2
 block body-script
   script(src=`${env.SERVER}/javascripts/album-profile.js`)

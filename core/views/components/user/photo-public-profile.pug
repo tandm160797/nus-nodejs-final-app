@@ -1,6 +1,6 @@
 extends ./../../layouts/layout-01.pug
 block head-script
-  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/photo-profile.css`)
+  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/photo-public-profile.css`)
   
 block body-content
     .app
@@ -34,27 +34,28 @@ block body-content
             a#feeds(href=`${env.SERVER}/discover/photo?token=${token}`) Discover
       .content__mid.col-md-8
         .row.p-4.d-flex.align-items-center
-          if user
+          if publicUser
             .col-md-3
-              if user.avatarUrl
-                img.rounded-circle(src=`${env.SERVER}/images/${user.avatarUrl}` alt=`${user.avatarUrl}` width='100%')
+              if publicUser.avatarUrl
+                img.rounded-circle(src=`${env.SERVER}/images/${publicUser.avatarUrl}` alt=`${publicUser.avatarUrl}` width='100%')
               else
                 img.rounded-circle(src=`${env.SERVER}/images/default-avatar.png` alt='default-avatar' width='100%')
             .col-md-9
               div
                 span.btn-following
-                  a.p-2(href='#') Edit Profile
+                  if publicUser.isFollowed
+                    a#follow-action.p-2(href=`${env.SERVER}/user/${user._id}/unfollow/${publicUser._id}` token=`${token}`) following
+                  if !publicUser.isFollowed
+                    a#follow-action.p-2(href=`${env.SERVER}/user/${user._id}/follow/${publicUser._id}` token=`${token}`) follow
               .my-4
-                h3 #{user.firstName} #{user.lastName}
+                h3 #{publicUser.firstName} #{publicUser.lastName}
               .link-profile.d-flex
-                a.pr-4.border-right.link-profile--active(href=`${env.SERVER}/user/${user._id}/profile/photo?token=${token}`) #{user.photoCount} PHOTOS
-                a.px-4.border-right(href=`${env.SERVER}/user/${user._id}/profile/album?token=${token}`) #{user.albumCount} ALBUMS
-                a.px-4.border-right(href=`${env.SERVER}/user/${user._id}/profile/following?token=${token}`) #{user.followings.length} FOLLOWINGS
-                a.pl-4(href=`${env.SERVER}/user/${user._id}/profile/follower?token=${token}`) #{user.followers.length} FOLLOWERS
-        .row.mt-4.p-4.d-flex.justify-content-end
-          a#add-photo.btn.btn-success.mr-4(href=`${env.SERVER}/photo/new?token=${token}`) Add Photo
+                a.pr-4.border-right.link-profile--active(href=`${env.SERVER}/user/${publicUser._id}/public-profile/photo?token=${token}`) #{publicUser.photoCount} PHOTOS
+                a.px-4.border-right(href=`${env.SERVER}/user/${publicUser._id}/profile/album?token=${token}`) #{publicUser.albumCount} ALBUMS
+                a.px-4.border-right(href=`${env.SERVER}/user/${publicUser._id}/profile/following?token=${token}`) #{publicUser.followings.length} FOLLOWINGS
+                a.pl-4(href=`${env.SERVER}/user/${publicUser._id}/profile/follower?token=${token}`) #{publicUser.followers.length} FOLLOWERS
         .row.mt-4.p-4
-          each photo in user.photos
+          each photo in publicUser.photos
             .col-md-3.p-4
               figure.figure.position-relative
                 img.photo-img.figure-img.img-fluid.rounded(src=`${env.SERVER}${photo.photoUrl}` alt=`${photo.photoUrl}` data-toggle="modal" data-target="#photo-modal" photo-title=`${photo.title}` photo-description=`${photo.description}`)
@@ -82,4 +83,4 @@ block body-content
                 p#modal-footer
       .content__right.col-md-2
 block body-script
-  script(src=`${env.SERVER}/javascripts/photo-profile.js`)
+  script(src=`${env.SERVER}/javascripts/photo-public-profile.js`)

@@ -1,6 +1,6 @@
 extends ./../../layouts/layout-01.pug
 block head-script
-  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/feeds-photo.css`)
+  link(rel='stylesheet' href=`${env.SERVER}/stylesheets/discover-photo.css`)
 block body-content
     .app
     .header.row.no-gutters.d-flex.align-items-center
@@ -28,13 +28,13 @@ block body-content
       .content__left.col-md-2
         .content__left-link
           div
-            a.content__left-link--active(href=`${env.SERVER}/feeds/photo?token=${token}`) Feeds
+            a(href=`${env.SERVER}/feeds/photo?token=${token}`) Feeds
           div
-            a#feeds(href=`${env.SERVER}/discover/photo?token=${token}`) Discover
+            a#feeds.content__left-link--active(href=`${env.SERVER}/discover/photo?token=${token}`) Discover
       .content__mid.col-md-8
         .photo-album-button.row.no-gutters.f-flex.justify-content-center
-          a.photo-album-button--active.rounded-left(href=`${env.SERVER}/feeds/photo?token=${token}`) Photo
-          a.rounded-right(href=`${env.SERVER}/feeds/album?token=${token}`) Album
+          a.photo-album-button--active.rounded-left(href=`${env.SERVER}/discover/photo?token=${token}`) Photo
+          a.rounded-right(href=`${env.SERVER}/discover/album?token=${token}`) Album
         .content-body.row.no-gutters
           .row.no-gutters
             each photo in followingPhotos
@@ -81,6 +81,6 @@ block body-content
                 p#modal-footer
       .content__right.col-md-2
 block body-script
-  script(src=`${env.SERVER}/javascripts/feeds-photo.js`)
+  script(src=`${env.SERVER}/javascripts/discover-photo.js`)
   if token
     script!= `localStorage.setItem('token', '${token}');`
